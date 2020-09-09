@@ -1,0 +1,33 @@
+<html>
+<head>
+</head>
+<body>
+<h1 id="demo">hi</h1>
+<script>
+var crop = {Wheat:{phl:5,phu:7},Rice:{phl:3,phu:4.5},Tobacco:{phl:4.5,phu:8.5},Cotton:{phl:3.5,phu:6.5},Bajra:{phl:13,phu:14}};
+var soilph = 5;
+var land_size=5;
+var fertprice=2000;
+var txt="";
+for(i in crop){
+l=crop[i].phl;
+u=crop[i].phu;
+if(u >= soilph & l<=soilph){
+	txt += "no need for fertilizer for "+i+" ";
+	}
+else if(soilph<l){
+	var inc=l-soilph;
+	var fert=inc*land_size;
+	txt += "need to use fertilizer for "+i+"  to increase ph "+fert+" ";
+	}
+else if(soilph>u){
+	var inc=soilph-u;
+	var fert=inc*land_size;
+	txt += "need to use fertilizer for "+i+"  to decrease ph "+fert+" ";
+	}
+}
+// Display some data from the object:
+document.getElementById("demo").innerHTML = txt;
+</script>
+</body>
+</html>

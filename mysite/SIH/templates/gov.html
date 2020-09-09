@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <title>Helpline</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/webpagecss.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</head>
+<body>
+
+		<div id="google_translate_element"></div>
+<div>
+
+
+<div id="header" style="background-color:green">
+				<div id="leftmenu">
+				<ul class="menu">
+					<li><a href="{% url 'home' %}">Home</a></li>
+					<li><a href="{% url 'A' %}">About Us</a></li>
+					<li><a href="{% url 'G' %}">Govt.Helpline</a></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">Financial Help<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'L' %}">Loan</a>
+						  <a href="{% url 'S' %}">Scheme</a>
+						</div>
+					</div></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">More<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'P' %}">Pest</a>
+						  <a href="{% url 'C' %}">Crop</a>
+							 {% if request.user.is_staff %}
+                <li><a href="{% url 'M' %}">send sms</a></li>
+                {% endif %}
+						</div>
+					</div></li>
+
+				</ul>
+				</div>
+
+				<div id="rightmenu">
+					{% if not request.user.is_authenticated %}
+				<span id="profile"><button id="loginregister" onclick="document.getElementById('id01').style.display='block'">Login/Register</button></span>
+				 {% else %}
+						<a href="{% url 'r' %}">Logout &nbsp;{{a}}&nbsp;     {{ request.user.user_detail_set.first.name }}  &nbsp;   </a>
+
+
+				</div>
+				<!---img src="{{ request.user.user_detail_set.first.photo.url }}" --->
+{% endif %}
+		</div>
+</div>
+
+
+<div class="container pt-5">
+  <h2><b> <u>Chemical Factories : </u></b/></h2>
+  <div class="card-columns">
+    <div class="card bg-success text-white">
+	 <div class="card-body">
+      <h4 class="card-title"><b>Coromandel</b></h4>
+	  <img class="card-img-bottom" src="{% static 'images/8.0.jpg' %}" alt="Card image" style="width:100%">
+      <p class="card-text"> Coromandel manufactures and markets a wide range of fertilisers making it a leader in its addressable markets & the second largest phosphatic fertiliser player .</p>
+      <a href="http://chambalfertilisers.com/index8b74.html?option=com_content&view=article&id=64&Itemid=168" class="btn btn-lg text-white"><b><u>Contact Us</u></b></a>
+    </div>
+    <div class="card-body">
+        <p class="card-text">Tel: +91 40 66997300</p>
+      </div>
+    </div>
+    <div class="card bg-success text-white">
+	<div class="card-body">
+      <h4 class="card-title"><b>DHANUKA</b></h4>
+	   <img class="card-img-bottom" src="{% static 'images/1.0.jpg' %}" alt="Card image" style="width:100%">
+      <p class="card-text">Dhanuka Agritech Limited is one of India's leading agro-chemical Company and is listed by Forbes Magazine in the category of “200 Best under A Billion Companies in Asia Pacific”. We are listed with Bombay Stock Exchange and National Stock Exchange of India.</p>
+      <a href="https://www.dhanuka.com/products" class="btn btn-basic text-white"><b><u>Contact Us</u></b></a>
+    </div>
+      <div class="card-body">
+        <p class="card-text">Tel: 011-42390783</p>
+      </div>
+    </div>
+    <div class="card bg-success text-white">
+	<div class="card-body text-white">
+      <h4 class="card-title"><b>NARMADA BIO CEM</b></h4>
+	   <img class="card-img-bottom" src="{% static 'images/3.0.png' %}" alt="Card image" style="width:100%">
+      <p class="card-text">Narmada Bio-chem Ltd. has been serving the farming community for over two ... The growth of NBCL in the inputs business in a span of just 5 years has itself ...
+</p>
+      <a href="https://www.nbclindia.com/page-products.php" class="btn btn-lg text-white"><b><u>Contact Us</u></b></a>
+    </div>
+
+
+
+
+
+      <div class="card-body">
+        <p class="card-text">Tel: +91 79 26871072</p>
+      </div>
+    </div>
+    <div class="card bg-success text-white">
+
+	<div class="card-body">
+      <h4 class="card-title"><b>NAGARGUN FERTILIZER</b></h4>
+	   <img class="card-img-bottom" src="{% static 'images/5.0.jpg' %}" alt="Card image" style="width:100%">
+      <p class="card-text">One of the most recognized agricultural brands in India, we are dedicated
+to providing our customers with solutions in plant nutrition, irrigation,
+farm services and plant management.</p>
+      <a href=http://www.nagarjunafertilizers.com/solutions_snb_products.htm"><b><u>Contact Us</u></b></a>
+    </div>
+      <div class="card-body">
+        <p class="card-text">Tel +91-884-2360390</p>
+      </div>
+    </div>
+    <div class="card bg-success text-white">
+
+	<div class="card-body">
+      <h4 class="card-title"><b>IPL</b></h4>
+	   <img class="card-img-bottom" src="{% static 'images/6.0.jpg' %}" alt="Card image" style="width:100%">
+      <p class="card-text">FERTILISERS. The saga of Indian Potash ... FEEDS. In recent years, IPL has diversified into high quality cattle Feed and has established production...</p>
+      <a href="http://www.indianpotash.org/fertilisers.html" class="btn btn-lg text-white"><b><u>Contact Us</u></b></a>
+    </div>
+      <div class="card-body ">
+        <p class="card-text">Tel: (044)-28297855</p>
+      </div>
+    </div>
+    <div class="card bg-success text-white">
+	<div class="card-body text-white">
+      <h4 class="card-title"><b>National Fertilizers Ltd</b></h4>
+	   <img class="card-img-bottom" src="{% static 'images/7.0.jpg' %}" alt="Card image" style="width:100%">
+      <p class="card-text">National Fertilizers Limited. ... Hon'ble Minister of Chemicals & Fertilizers. Shri Mansukh Mandaviya Hon'ble Minister of State of Chemicals & Fertilizers ...</p>
+      <a href="http://chambalfertilisers.com/index8b74.html?option=com_content&view=article&id=64&Itemid=168" class="btn btn-basic text-white"><b><u>Contact Us</u></b></a>
+    </div>
+      <div class="card-body">
+        <p class="card-text">Tel : 011-24360066</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<div class="container-fluid" id="footer">
+			<div class="footer">
+
+			<div class="row1">
+              <div style="width:auto;" class=" col-1">
+                 <img src="{% static 'images/krishi_seva.png' %}" class="pr-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+              <div class="col-9">
+                  <h5>Sell With Us:</h5>
+              </div>
+
+
+             <div style="width:auto;" class=" col-2">
+                 <img src="{% static 'images/cdklogo.png' %}" class="pl-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+			</div>
+
+			</div>
+		</div>
+
+
+</body>
+</html>

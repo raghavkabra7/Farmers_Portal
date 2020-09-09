@@ -1,0 +1,358 @@
+<html>
+	<head>
+		{% load static %}
+		<title>former</title>
+
+		<link rel="stylesheet" href="{% static 'css/webpagecss.css' %}">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
+<script>
+		!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);
+		js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';
+		fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+
+		function googleTranslateElementInit() {
+		new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+		}
+
+
+		</script>
+		<script src="{% static 'js/pagejs.js' %}" type="text/javascript"></script>
+
+		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+	</head>
+	<body>
+		<div id="google_translate_element"></div>
+
+		<div id="sliderFrame">
+			<div id="slider">
+				<img src="{% static 'images/c1.jpg' %}" />
+				<img src="{% static  'images/c2.jpg' %}" />
+				<img src="{% static 'images/c3.jpg' %}" />
+				<img src="{% static 'images/c4.jpg' %}" />
+				<img src="{% static 'images/c5.jpg' %}" />
+			</div>
+		</div>
+
+
+		<div id="header">
+				<div id="leftmenu">
+				<ul class="menu">
+					<li><a href="{% url 'home' %}">Home</a></li>
+					<li><a href="{% url 'A' %}">About Us</a></li>
+					<li><a href="{% url 'Fr' %}">Govt.Helpline</a></li>
+					<li><div class="dropdown1 pt-2">
+						<a class="dropdownbtn">Financial Help<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content" style="background-color:lightgreen;">
+						  <a href="{% url 'L' %}">Loan</a>
+						  <a href="{% url 'S' %}">Scheme</a>
+						</div>
+					</div></li>
+					<li><a href="{% url 'G' %}">Fertilizer</a></li>
+					<li><div class="dropdown1 pt-2">
+						<a class="dropdownbtn">More<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content" style="background-color:lightgreen;">
+						  <a href="{% url 'P' %}" class="mt-2">Pest</a>
+						  <a href="{% url 'C' %}">Crop</a>
+							 {% if request.user.is_staff %}
+                <li><a href="{% url 'M' %}">send sms</a></li>
+                {% endif %}
+						</div>
+					</div></li>
+
+				</ul>
+				</div>
+
+				<div id="rightmenu">
+					{% if not request.user.is_authenticated %}
+				<span id="profile"><button id="loginregister" onclick="document.getElementById('id01').style.display='block'">Login/Register</button></span>
+				 {% else %}
+					<img src="{{ request.user.user_detail_set.first.photo.url }}" style="height:50px;width:50px;border-radius:50px;">
+					<span class="dropdown1 pr-5" style="float:right;">
+						<a class="dropdownbtn" id="logou">{{ request.user.user_detail_set.first.name }}<i class="fa fa-caret-down"></i></a>
+						<span class="dropdown-content">
+						  <a href="{% url 'Pr' %}">Profile</a><hr>
+						  <a href="{% url 'r' %}">Logout</a>
+						</span>
+				</span>
+
+
+				</div>
+				<!---img src="{{ request.user.user_detail_set.first.photo.url }}" --->
+{% endif %}
+		</div>
+
+
+
+
+
+
+
+		<!---register--->\
+     <div id="id01" class="modal" style="overflow:auto;">
+
+
+		  <div class="form-sign">
+
+
+			<form id="registerform" class="modal-content animate"style="width:50%;" action="" method="post"
+			enctype ="multipart/form-data">
+
+				  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+
+{% csrf_token %}
+
+
+				 <center><a href="#default" class="logo"> <h1>REGISTATION</h1></a></center>
+  <p>*Please fill in this form to create an account.</p>
+
+
+
+	<div class="containermade">
+
+
+   <label for="uname"><b>Full Name</b></label>
+    <input type="text" placeholder="Enter Username" name="name" required>
+
+
+					<label for="Phone"><b>Phone Number </b></label>
+					<input type="text" placeholder="Enter mobail No." name="Mobail"><br>
+
+                   <label for="mail"><b>E-mail (Optional)</b></label>
+					<input type="text" placeholder="Enter Email" name="email"><br>
+
+
+
+
+
+
+
+
+	<label for="gender"><b>Gender:</b></label><br>
+	<input type="radio"  name="gender" value="male" checked> Male
+					<input type="radio"  name="gender" value="female"> Female
+					<input type="radio"  name="gender" value="other"> Other<br><br>
+
+
+
+
+<label for="language"><b> id proof card</b></label>
+
+					<select name="aadhar">
+					  <option value="Aadhar card">Aadhar card</option>
+					  <option value="Pen card">Pen card</option>
+					  <option value="kishan card">kishan card</option>
+					  <option value="other card">other card</option>
+</select> <br>
+
+					<label for="Email"><b>Id Proof no.</b></label>
+					<input type="text" placeholder="Enter Id no." name="id"><br><br>
+
+
+
+
+
+					<label for="photo"><b>Photo</b></label>
+					<input type="file" name="photo"><br><br>
+
+
+
+					<label for="language"><b>Prefered Language</b></label>
+
+					<select name="cars">
+					  <option value="Hindi">Hindi</option>
+					  <option value="English">English</option>
+					  <option value="Gujarati">Gujarati </option>
+					  <option value="Punjabi">Punjabi </option>
+					  <option value="Bengali">Bengali</option>
+					  <option value="Assamese">Assamese </option>
+					  <option value="Urdu">Urdu </option>
+					  <option value="Oriya">Oriya </option>
+					  <option value="Marathi">Marathi </option>
+					  <option value="Kannada">Kannada</option>
+					  <option value="Tamil">Tamil</option>
+					  <option value="Telugu">Telugu</option>
+					  <option value="Malayalam"> Malayalam</option>
+					  <option value="Sindhi">Sindhi</option>
+					  <option value="Konkani">Konkani </option>
+					  <option value="Manipuri">Manipuri </option>
+					  <option value="Khasi">Khasi </option>
+					  <option value="Mizo"> Mizo </option>
+					</select> <br> <br>
+
+					<label for="language"><b>Districs</b></label>
+					<select name="districs" required>
+
+					  <option value="">Select district</option>
+						{% for i in alldis %}
+						<option value="{{ i.id }}">{{ i.name }}</option>
+						{% endfor %}
+</select> <br><br>
+						<label for="language"><b>states</b></label>
+					<select name="states"  required>
+
+					  <option value="">Select states</option>
+						{% for i in allstates %}
+						<option value="{{ i.id }}">{{ i.name }}</option>
+						{% endfor %}
+					</select> <br><br>
+
+<label for="land"><b>Land Size</b></label>
+				  <input class="input"type="number" placeholder="Enter land size" name="size" required>
+
+					<select name="quantity">
+					  <option value="Square Feet">Square Feet</option>
+					  <option value="Square Centimeter">Square Centimeter</option>
+					  <option value="Square Inch">Square Inch</option>
+					  <option value="Square Kilometer">Square Kilometer</option>
+					  <option value="Square Meter">Square Meter</option>
+					  <option value="Square Mile">Square Mile</option>
+					  <option value="Square Yard">Square Yard</option>
+					  <option value="Acre">Acre</option>
+					  <option value="Hectare">Hectare</option>
+					  <option value="Bigha-Pucca">Bigha-Pucca</option>
+					  <option value="Bigha">Bigha</option>
+					  <option value="Bigha- Kachha">Bigha- Kachha</option>
+					  <option value="Biswa – Pucca"> Biswa – Pucca</option>
+					  <option value="Biswa">Biswa</option>
+					  <option value="Biswa (Kaccha)">Biswa (Kaccha)</option>
+					  <option value="Biswansi">Biswansi</option>
+					  <option value="Killa">Killa</option>
+					  <option value=" Ghumaon"> Ghumaon</option>
+					  <option value="Kanal">Kanal</option>
+					</select> <br><br>
+
+
+					<label for="password"><b>Password</b></label>
+					<input type="password" name="password">
+
+					<label for="password"><b>Confirm Password</b></label>
+					<input type="password" name="confirmpassword">
+
+				  <button id="login"type="submit">Register</button>
+				  <label>
+					<input type="checkbox" checked="checked" name="remember"> Remember me
+				  </label>
+				</div>
+
+				<div class="containermade" style="background-color:#f1f1f1">
+				  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+				  <button type="button" onclick="document.getElementById('registerform').style.display='none';document.getElementById('loginform').style.display='block'">login</button>
+
+				</div>
+		    </form>
+
+			<!---login--->
+
+ {% if error %}
+			<script>alert("password not match")</script>
+			 {% endif %}
+
+
+		    <form class="modal-content animate" style="width:50%;"id="loginform" action="{% url 'l' %}" method="post">
+
+{% csrf_token %}
+				<div class="imgcontainer">
+
+				  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+				  <img src="{% static 'profile.png' %}" alt="Avatar" class="avatar">
+				</div>
+
+				<div class="containermade">
+				  <label for="uname"><b>Username</b></label>
+				  <input type="text" placeholder="Enter Username" name="mob" required>
+
+				  <label for="psw"><b>Password</b></label>
+				  <input type="password" placeholder="Enter Password" name="password" required>
+
+				  <button id="login"type="submit">Login</button>
+				  <label>
+					<input type="checkbox" checked="checked" name="remember"> Remember me
+				  </label>
+				</div>
+
+				<div class="containermade" style="background-color:#f1f1f1">
+				  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+				  <button type="button" onclick="document.getElementById('registerform').style.display='block';document.getElementById('loginform').style.display='none'">Register</button>
+				  <span class="psw">Forgot <a href="#">password?</a></span>
+				</div>
+		    </form>
+		</div>
+
+
+		 </div>
+
+			<!---left--->
+			<div class="container-fluid pt-5">
+		  <div class="row pt-4">
+			<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+			  <div>
+				<h3 style="text-align:center;">WEATHER</h3>
+                <a class="weatherwidget-io" href="https://forecast7.com/en/20d5978d96/india/" data-label_1="INDIA" data-label_2="WEATHER" data-font="Times New Roman" data-icons="Climacons Animated" >INDIA WEATHER</a>
+				</div>
+			</div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+			  <img class=" pl-5 ml-4 " src ="{% static 'images/h.png' %}">
+			</div>
+			<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3" style="text-align:center;">
+			  <div><h3>INFORMATION PORTAL</h3></div>
+				<div id="moving">
+					<marquee behavior="scroll" direction="up" scrollamount="2" onmouseover="this.setAttribute('scrollamount',0,0); this.stop()" onmouseout="this.setAttribute('scrollamount',2,0); this.start()">
+						<ul>
+							<li><a href="https://www.google.com/">MP CM Kamal Nath launches Rs 50,000 cr farm loan waiver scheme</a></li>
+						</ul>
+						<hr>
+						<div><h3>INFORMATION PORTAL STATES</h3></div>
+						<ul>
+							<li>Soil Health Card Scheme. ...
+Pradhan Mantri Fasal Bima Yojana (PMFBY) ...
+Neem Coated Urea (NCU) ...</li>
+						</ul>
+					</marquee>
+				</div>
+			</div>
+		  </div>
+		</div>
+
+	<div class="container-fluid" id="footer">
+			<div class="footer">
+
+			<div class="row1">
+              <div style="width:auto;" class=" col-1">
+                 <img src="{% static 'images/krishi_seva.png' %}" class="pr-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+              <div class="col-9">
+                  <h5>Sell With Us:</h5>
+              </div>
+
+
+             <div style="width:auto;" class=" col-2">
+                 <img src="{% static 'images/cdklogo.png' %}" class="pl-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+			</div>
+
+			</div>
+		</div>
+
+
+
+<script>!function(e,t,a){var c=e.head||e.getElementsByTagName("head")[0],n=e.createElement("script");n.async=!0,n.defer=!0, n.type="text/javascript",n.src=t+"/static/js/chat_widget.js?config="+JSON.stringify(a),c.appendChild(n)}(document,"https://app.engati.com",{bot_key:"d6102b4bb89c4e5a",welcome_msg:true,branding_key:"default",server:"https://app.engati.com",e:"p" });</script>
+
+    </body>
+</html>
+
+
+
+
+
+
+

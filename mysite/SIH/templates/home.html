@@ -1,0 +1,1099 @@
+<html>
+	<head>
+		{% load static %}
+		<title>former</title>
+
+		<link rel="stylesheet" href="{% static 'css/webpagecss.css' %}">
+
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+		<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin: auto;
+  text-align: center;
+  font-family: arial;
+  color: green;
+
+}
+
+.title {
+  color: grey;
+  font-size: 18px;
+}
+
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #4CAF50;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.a {
+  font-size: 15px;
+  color: black;
+
+
+}
+
+button:hover, a:hover {
+  opacity: 0.7;
+}
+</style>
+
+
+
+	</head>
+	<body onload="wheather()">
+		<div id="google_translate_element"></div>
+
+		<div id="sliderFrame">
+			<div id="slider">
+				<img src="{% static 'images/c1.jpg' %}" />
+				<img src="{% static  'images/c2.jpg' %}" />
+				<img src="{% static 'images/c3.jpg' %}" />
+				<img src="{% static 'images/c4.jpg' %}" />
+				<img src="{% static 'images/c5.jpg' %}" />
+			</div>
+		</div>
+          <div id="header">
+				<div id="leftmenu">
+				<ul class="menu">
+					<li><a href="{% url 'se' %}">Home</a></li>
+					<li><a href="{% url 'A' %}">About Us</a></li>
+					<li><a href="{% url 'G' %}">Govt.Helpline</a></li>
+					<li><div class="dropdown1 pt-2">
+						<a class="dropdownbtn">Financial Help<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content" style="background-color:lightgreen;">
+						  <a href="{% url 'L' %}">Loan</a>
+						  <a href="{% url 'S' %}">Scheme</a>
+						</div>
+					</div></li>
+					<li><a href="{% url 'Fr' %}">Fertilizer</a></li>
+					<li><div class="dropdown1 pt-2">
+						<a class="dropdownbtn">More<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content" style="background-color:lightgreen;">
+						  <a href="{% url 'P' %}" class="mt-2">Pest</a>
+						  <a href="{% url 'C' %}">Crop</a>
+							 {% if request.user.is_staff %}
+                <li><a href="{% url 'M' %}">send sms</a></li>
+                {% endif %}
+						</div>
+					</div></li>
+
+				</ul>
+				</div>
+
+				<div id="rightmenu">
+					{% if not request.user.is_authenticated %}
+				<span id="profile"><button id="loginregister" onclick="document.getElementById('id01').style.display='block'">Login/Register</button></span>
+				 {% else %}
+					<img src="{{ request.user.user_detail_set.first.photo.url }}" style="height:50px;width:50px;border-radius:50px;">
+					<span class="dropdown1 pr-5" style="float:right;">
+						<a class="dropdownbtn" id="logou">{{ request.user.user_detail_set.first.name }}<i class="fa fa-caret-down"></i></a>
+						<span class="dropdown-content">
+						  <a href="{% url 'Pr' %}">Profile</a><hr>
+						  <a href="{% url 'r' %}">Logout</a>
+						</span>
+				</span>
+
+
+				</div>
+				<!---img src="{{ request.user.user_detail_set.first.photo.url }}" --->
+{% endif %}
+		</div>
+
+
+
+
+
+
+		<div class="container-fluid pt-5">
+		  <div class="row pt-4">
+			<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3">
+			  <div>
+				<h3 style="text-align:center;">WEATHER</h3>
+
+				 <section class="forecast">
+					<h1 class="location" id="weathercity">City</h1>
+					<h2 class="temperature" id="weathertemp">--</h2>
+				</section>
+
+				<section class="five-day-forecast">
+					<div id="current-day"></div>
+
+					<ul>
+						<li>
+							<span class="day" id="day1">Day 1</span>
+							<div>
+								<span class="temp" id="temp1">--</span>
+							</div>
+						</li>
+
+						<div class="details">
+							<span id="datetoday">10/10/2019</span>
+
+							<h4>Overcast clouds</h4>
+
+							<div class="min-max-temp">
+								<span>Max temp</span>
+								<span class="max-temp" id="maxtemp1">30</span>
+
+								<span>Min temp</span>
+								<span class="min-temp" id="mintemp1">25</span>
+							</div>
+
+							<div class="humidity-wind">
+								<span>Humidity</span>
+								<span class="humidity" id="humid1">70%</span>
+
+								<span>Wind</span>
+								<img src="img/arrow.svg" alt="">
+								<span class="wind" id="wind1">10km/h</span>
+							</div>
+						</div>
+
+						<li>
+							<span class="day" id="day2">Day 2</span>
+							<div>
+								<span class="temp" id="temp2">--</span>
+							</div>
+						</li>
+
+						<div class="details">
+							<span id="datetoday">10/10/2019</span>
+
+							<h4>Overcast clouds</h4>
+
+							<div class="min-max-temp">
+								<span>Max temp</span>
+								<span class="max-temp" id="maxtemp2">30</span>
+
+								<span>Min temp</span>
+								<span class="min-temp"  id="mintemp2">25</span>
+							</div>
+
+							<div class="humidity-wind">
+								<span>Humidity</span>
+								<span class="humidity" id="humid2">70%</span>
+
+								<span>Wind</span>
+								<img src="img/arrow.svg" alt="">
+								<span class="wind" id="wind2">10km/h</span>
+							</div>
+						</div>
+
+						<li>
+							<span class="day" id="day3">Day 3</span>
+							<div>
+								<span class="temp" id="temp3">--</span>
+							</div>
+						</li>
+
+						<div class="details">
+							<span id="datetoday">10/10/2019</span>
+
+							<h4>Overcast clouds</h4>
+
+							<div class="min-max-temp">
+								<span>Max temp</span>
+								<span class="max-temp" id="maxtemp3">30</span>
+
+								<span>Min temp</span>
+								<span class="min-temp" id="mintemp3">25</span>
+							</div>
+
+							<div class="humidity-wind">
+								<span>Humidity</span>
+								<span class="humidity" id="humid3">70%</span>
+
+								<span>Wind</span>
+								<img src="img/arrow.svg" alt="">
+								<span class="wind" id="wind3">10km/h</span>
+							</div>
+						</div>
+
+						<li>
+							<span class="day" id="day4">Day 4</span>
+							<div>
+								<span class="temp" id="temp4">--</span>
+							</div>
+						</li>
+
+						<div class="details">
+							<span id="datetoday">10/10/2019</span>
+
+							<h4>Overcast clouds</h4>
+
+							<div class="min-max-temp">
+								<span>Max temp</span>
+								<span class="max-temp" id="maxtemp4">30</span>
+
+								<span>Min temp</span>
+								<span class="min-temp" id="mintemp4">25</span>
+							</div>
+
+							<div class="humidity-wind">
+								<span>Humidity</span>
+								<span class="humidity" id="humid4">70%</span>
+
+								<span>Wind</span>
+								<img src="img/arrow.svg" alt="">
+								<span class="wind" id="wind4">10km/h</span>
+							</div>
+						</div>
+
+						<li>
+							<span class="day" id="day5">Day 5</span>
+							<div>
+								<span class="temp" id="temp5">--</span>
+							</div>
+						</li>
+
+						<div class="details">
+							<span id="datetoday">10/10/2019</span>
+
+							<h4>Overcast clouds</h4>
+
+							<div class="min-max-temp">
+								<span>Max temp</span>
+								<span class="max-temp" id="maxtemp5">30</span>
+
+								<span>Min temp</span>
+								<span class="min-temp" id="mintemp5">25</span>
+							</div>
+
+							<div class="humidity-wind">
+								<span>Humidity</span>
+								<span class="humidity" id="humid5">70%</span>
+
+								<span>Wind</span>
+								<img src="img/arrow.svg" alt="">
+								<span class="wind" id="wind5">10km/h</span>
+							</div>
+						</div>
+
+						<li>
+							<span class="day" id="day6">Day 6</span>
+							<div>
+								<span class="temp" id="temp6">--</span>
+							</div>
+						</li>
+
+						<div class="details">
+							<span id="datetoday">10/10/2019</span>
+
+							<h4>Overcast clouds</h4>
+
+							<div class="min-max-temp">
+								<span>Max temp</span>
+								<span class="max-temp" id="maxtemp6">30</span>
+
+								<span>Min temp</span>
+								<span class="min-temp" id="mintemp6">25</span>
+							</div>
+
+							<div class="humidity-wind">
+								<span>Humidity</span>
+								<span class="humidity" id="humid6">70%</span>
+
+								<span>Wind</span>
+								<img src="img/arrow.svg" alt="">
+								<span class="wind" id="wind6">10km/h</span>
+							</div>
+						</div>
+
+						<li>
+							<span class="day" id="day7">Day 7</span>
+							<div>
+								<span class="temp" id="temp7">--</span>
+							</div>
+						</li>
+
+						<div class="details">
+							<span id="datetoday">10/10/2019</span>
+
+							<h4>Overcast clouds</h4>
+
+							<div class="min-max-temp">
+								<span>Max temp</span>
+								<span class="max-temp" id="maxtemp7">30</span>
+
+								<span>Min temp</span>
+								<span class="min-temp" id="mintemp7">25</span>
+							</div>
+
+							<div class="humidity-wind">
+								<span>Humidity</span>
+								<span class="humidity" id="humid7">70%</span>
+
+								<span>Wind</span>
+								<img src="img/arrow.svg" alt="">
+								<span class="wind" id="wind7">10km/h</span>
+							</div>
+						</div>
+					</ul>
+				</section>
+                <p id="backendcity" style="display:none;">{{ request.user.user_detail_set.first.dis }}</p>
+
+
+
+				</div>
+			</div>
+			<div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+			  <div class="row" id="columnchart_values" style="width: 900px; height: 300px;"></div><br><br>
+				<div class="row pt-5"><h1 id="pest"></h1></div>
+
+
+				<p style="display:none;" id = "cn1">{{cnp1}}</p>
+				<p style="display:none;" id = "c1">{{cp1}}</p>
+				<p style="display:none;" id = "cn2">{{cnp2}}</p>
+				<p style="display:none;" id = "c2">{{cp2}}</p>
+				<p style="display:none;" id = "cn3">{{cnp3}}</p>
+				<p style="display:none;" id = "c3">{{cp3}}</p>
+                <p style="display:none;" id = "cn4">{{cnp4}}</p>
+				<p style="display:none;" id = "c4">{{cp4}}</p>
+				<p style="display:none;" id = "area">{{area}}</p>
+					<div class="container">
+						<div style="width:90%;">
+					  <h4 class="pb-4">Fertilizers needed for the above crops:-</h4>
+					  <table class="table table-hover">
+						<thead>
+						  <tr>
+							<th>Crop</th>
+							<th>PH Change</th>
+							<th>Fertilizer Amount (in kg)</th>
+						  </tr>
+						</thead>
+						<tbody>
+						  <tr>
+							<td>{{cnp1}}</td>
+							<td id="1">Doe</td>
+							<td id="val1">john@example.com</td>
+						  </tr>
+						  <tr>
+							<td>{{cnp2}}</td>
+							<td id="2">Moe</td>
+							<td id="val2">mary@example.com</td>
+						  </tr>
+						  <tr>
+							<td>{{cnp3}}</td>
+							<td id="3">Dooley</td>
+							<td id="val3">july@example.com</td>
+						  </tr>
+						<tr>
+							<td>{{cnp4}}</td>
+							<td id="4">Dooley</td>
+							<td id="val4">july@example.com</td>
+						  </tr>
+						</tbody>
+					  </table>
+					</div>
+						</div>
+
+
+			</div>
+			  <script>
+				var crop = {Wheat:{phl:5,phu:7},Rice:{phl:7,phu:8},Soyabean:{phl:4.5,phu:8.5},Cotton:{phl:3.5,phu:6.5},Jowar:{phl:13,phu:14},Maize:{phl:5.8,phu:6.8},Potato:{phl:5.4,phu:5.9},Sugarcane:{phl:5,phu:8.5}};
+				var soilph = 5;
+				var land_size=document.getElementById("area").innerHTML;
+				var fertprice=200;
+				var txt="";
+				var cnt1 = document.getElementById("cn1").innerHTML;
+
+				var cnt2 = document.getElementById("cn2").innerHTML;
+
+				var cnt3 = document.getElementById("cn3").innerHTML;
+
+				var cnt4 = document.getElementById("cn4").innerHTML;
+				var fert = 0;
+				for(i in crop){
+				crop1=JSON.stringify(i);
+				if(crop1.includes(cnt1)){
+					l=crop[i].phl;
+					u=crop[i].phu;
+					txt='';
+					if(u >= soilph & l<=soilph){
+					txt += "no need for fertilizer"+i+","+" ";
+					fert=0;
+					}
+				else if(soilph<l){
+					var inc=l-soilph;
+					fert=inc*land_size*fertprice;
+					txt += "need to use fertilizer to increase ph by "+inc.toFixed(2)+","+" ";
+					}
+				else if(soilph>u){
+					var inc=soilph-u;
+					fert=inc*land_size*fertprice;
+					txt += "need to use fertilizer for "+i+"  to decrease ph "+inc.toFixed(2)+","+" ";
+					}
+				document.getElementById("1").innerHTML = txt;
+				document.getElementById("val1").innerHTML = fert.toFixed(2);
+
+				}
+				if(crop1.includes(cnt2)){
+					l=crop[i].phl;
+					u=crop[i].phu;
+					txt='';
+					if(u >= soilph & l<=soilph){
+					txt += "no need for fertilizer for "+i+","+" ";
+					fert=0;
+					}
+				else if(soilph<l){
+					var inc=l-soilph;
+					fert=inc*land_size*fertprice;
+					txt += "need to use fertilizer to increase ph by "+inc.toFixed(2)+","+" ";
+					}
+				else if(soilph>u){
+					var inc=soilph-u;
+					fert=inc*land_size*fertprice;
+					txt += "need to use fertilizer for "+i+"  to decrease ph "+inc.toFixed(2)+","+" ";
+					}
+				document.getElementById("2").innerHTML = txt;
+				document.getElementById("val2").innerHTML = fert.toFixed(2);
+				}
+					if(crop1.includes(cnt3)){
+					l=crop[i].phl;
+					u=crop[i].phu;
+					txt='';
+					if(u >= soilph & l<=soilph){
+					txt += "no need for fertilizer for "+i+","+" ";
+					fert=0;
+					}
+				else if(soilph<l){
+					var inc=l-soilph;
+					fert=inc*land_size*fertprice;
+					txt += "need to use fertilizer to increase ph by "+inc.toFixed(2)+","+" ";
+					}
+				else if(soilph>u){
+					var inc=soilph-u;
+					fert=inc*land_size*fertprice;
+					txt += "need to use fertilizer for "+i+"  to decrease ph "+inc.toFixed(2)+","+" ";
+					}
+				document.getElementById("3").innerHTML = txt;
+				document.getElementById("val3").innerHTML = fert.toFixed(2);
+
+				}
+					if(crop1.includes(cnt4)){
+					l=crop[i].phl;
+					u=crop[i].phu;
+					txt='';
+					if(u >= soilph & l<=soilph){
+					txt += "no need for fertilizer for "+i+","+" ";
+					fert=0;
+					}
+				else if(soilph<l){
+					var inc=l-soilph;
+					fert=inc*land_size*fertprice;
+					txt += "need to use fertilizer to increase ph by "+inc.toFixed(2)+","+" ";
+					}
+				else if(soilph>u){
+					var inc=soilph-u;
+					fert=inc*land_size*fertprice;
+					txt += "need to use fertilizer for "+i+"  to decrease ph "+inc.toFixed(2)+","+" ";
+					}
+				document.getElementById("4").innerHTML = txt;
+				document.getElementById("val4").innerHTML = fert.toFixed(2);
+
+				}
+
+
+
+				}
+
+
+
+			  </script>
+			<div class="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3" style="text-align:center;">
+				<div>
+
+			  <div><h3>INFORMATION PORTAL</h3></div>
+				<div id="moving">
+					<marquee behavior="scroll" direction="up" scrollamount="2">
+						<ul>
+                        {% for i in notes %}
+						<li>{{ i.name }}</li>
+						{% endfor %}
+                    </ul>
+						<hr>
+						<div><h3>INFORMATION PORTAL STATES</h3></div>
+						<ul>
+                        {% for i in notes1 %}
+						<li>{{ i.name }}</li>
+						{% endfor %}
+                    </ul>
+					</marquee>
+				</div>
+					<div>
+<div style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.8);max-width: 300px;margin: auto;text-align: center;font-family: arial;color: green;">
+
+
+  <div style="margin: 24px 0">
+{% csrf_token %}
+    <form method="post" action="" enctype ="multipart/form-data" name ='Soil'></form>
+
+	   <span>select soil type</span>
+<select class="mt-4" name="sname" style="width:50%;">
+  <option value="black soil">black soil</option>
+  <option value="laterite soil">laterite soil</option>
+  <option value="arid soil">arid soil</option>
+  <option value="Alluvial soil">Alluvial soil</option>
+   <option value="Red and yellow soil">Red and yellow soil.</option>
+   <option value="Saline">Saline and alkaline soils.</option>
+   <option value="Desert soil">Desert soil</option>
+</select> <br><br>
+<div style="font-size: 15px;color: black;">
+Ph: <input style="border-radius:5px;" type="text" name="Ph" value="5.5"><br><br>
+Potassium: <input style="border-radius:5px;" type="text" name="potas" value="30 lb"><br><br>
+carbon nitrogen : <input style="border-radius:5px;width:50%;"type="text" name="cn" value="40 lb"><br><br>
+phosphorus : <input style="border-radius:5px;" type="text" name="phos" value="40 lb">
+<br><br>
+</div>
+<a href="#"><input type="submit" value="submit" style="green"></a>
+</form
+
+  </div>
+  <p style="color:white";><button style="color:green;border: none;outline: 0;display: inline-block;padding: 8px;color: white;background-color: #4CAF50;text-align: center;cursor: pointer;width: 100%;font-size: 18px;">soil health card</button></p>
+</div>
+					</div>
+		  </div>
+					</div>
+					</div>
+		  </div>
+
+
+
+
+
+
+	<div class="container-fluid" id="footer">
+			<div class="footer">
+
+			<div class="row1">
+              <div style="width:auto;" class=" col-1">
+                 <img src="{% static 'images/krishi_seva.png' %}" class="pr-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+              <div class="col-9">
+                  <h5>Sell With Us:</h5>
+              </div>
+
+
+             <div style="width:auto;" class=" col-2">
+                 <img src="{% static 'images/cdklogo.png' %}" class="pl-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+			</div>
+
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+		<script type="text/javascript">
+		!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);
+		js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';
+		fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+
+		function googleTranslateElementInit() {
+		new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+		}
+		google.charts.load("current", {packages:['corechart']});
+		google.charts.setOnLoadCallback(drawChart);
+		function drawChart() {
+		var cn1 = document.getElementById("cn1").innerHTML;
+		var c1 = document.getElementById("c1").innerHTML;
+		var cn2 = document.getElementById("cn2").innerHTML;
+		var c2 = document.getElementById("c2").innerHTML;
+		var cn3 = document.getElementById("cn3").innerHTML;
+		var c3 = document.getElementById("c3").innerHTML;
+		var cn4 = document.getElementById("cn4").innerHTML;
+		var c4 = document.getElementById("c4").innerHTML;
+		var c223 = parseInt(c2);
+		c3.trim();
+		a=Number(c3);
+			var data = google.visualization.arrayToDataTable([
+				["Crop", "Production", { role: "style" } ],
+				[cn1, parseInt(c1), "green"],
+				[cn2, parseInt(c2), "yellow"],
+				[cn3, parseInt(c3), "gold"],
+				[cn4, parseInt(c4), "color: red"]
+			]);
+
+			var view = new google.visualization.DataView(data);
+			view.setColumns([0, 1,
+					   { calc: "stringify",
+						 sourceColumn: 1,
+						 type: "string",
+						 role: "annotation" },
+					   2]);
+
+			var options = {
+				title: "Quntal per Acre",
+				width: 600,
+				height: 400,
+				bar: {groupWidth: "95%"},
+				legend: { position: "none" },
+			};
+			var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+			chart.draw(view, options);
+		}
+
+
+
+
+function wheather() {
+    let lon;
+    let lat;
+
+    let descriptionSelector = document.querySelector(".description");
+    let temperatureSelector = document.querySelector(".temperature");
+    let locationSelector = document.querySelector(".location");
+
+    let fiveDayTemps = new Array(5);
+    let fiveDayMaxTemps = new Array(5);
+    let fiveDayMinTemps = new Array(5);
+    let fiveDayWind = new Array(5);
+    let weatherCode = new Array(5);
+
+    let fiveDays = document.querySelectorAll(".details > span");
+    let description = document.querySelectorAll(".details h4");
+    let temp = document.querySelectorAll(".temp");
+    let day = document.querySelectorAll(".day");
+    let weatherImg = document.querySelectorAll(".weather-img");
+    let maxTemp = document.querySelectorAll(".max-temp");
+    let minTemp = document.querySelectorAll(".min-temp");
+    let humidity = document.querySelectorAll(".humidity");
+    let arrow = document.querySelectorAll(".humidity-wind img");
+    let wind = document.querySelectorAll(".wind");
+
+    let week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday'];
+    let today = new Date();
+    let dayName = today.getDay();
+
+	function drawWeather( d ) {
+		var celcius = Math.round(parseFloat(d.main.temp)-273.15);
+		var fahrenheit = Math.round(((parseFloat(d.main.temp)-273.15)*1.8)+32);
+
+		document.getElementById('description').innerHTML = d.weather[0].description;
+		document.getElementById('temp').innerHTML = celcius + '&deg;';
+		document.getElementById('prince').innerHTML = d.name;
+	}
+	function dayfunc(){
+
+		if(n==1){
+			return 'Monday';
+		}
+		else if(n==2){
+			return 'Tuesday';
+		}
+		else if(n==3){
+			return 'Wednesday';
+		}
+		else if(n==4){
+			return 'Thursday';
+		}
+		else if(n==5){
+			return 'Friday';
+		}
+		else if(n==6){
+			return 'Saturday';
+		}
+		else if(n==7){
+			return 'Sunday';
+		}
+	}
+	function putdata(data){
+		document.getElementById('weathercity').innerHTML = data.city.name;
+		document.getElementById('weathertemp').innerHTML = ((data.list[0].main.temp)-273).toFixed(2);
+		var d = new Date();
+		var n = d.getDay();
+		var year = d.getFullYear();
+		var month = d.getMonth();
+		var date = d.getDate();
+		date = date+'/'+(month+1)+'/'+year;
+		document.getElementById('datetoday').innerHTML = date;
+		console.log(date);
+		n=n-1;
+		for (i = 1; i <= week.length; i++) {
+		  var day_week='day'+i;
+		  var day_week_temp='temp'+i;
+		  var day_week_temp_max='maxtemp'+i;
+		  var day_week_temp_min='mintemp'+i;
+		  var day_week_humidity='humid'+i;
+		  var day_week_wind='wind'+i;
+		  document.getElementById(day_week).innerHTML = week[n];
+		  document.getElementById(day_week_temp).innerHTML = ((data.list[i].main.temp)-273).toFixed(2);
+		  document.getElementById(day_week_temp_max).innerHTML = ((data.list[i].main.temp_max)-273).toFixed(2);
+		  document.getElementById(day_week_temp_min).innerHTML = ((data.list[i].main.temp_min)-273).toFixed(2);
+		  document.getElementById(day_week_humidity).innerHTML = data.list[i].main.humidity.toFixed(2);
+		  document.getElementById(day_week_wind).innerHTML = data.list[i].wind.speed.toFixed(2)+'km/h';
+		  if(n==week.length-1){
+			  n=0;
+		  }
+		  else{
+			  n=n+1;
+		  }
+		}
+	}
+    function geoSuccess() {
+        var x=document.getElementById("backendcity").innerHTML;
+        var api = `http://api.openweathermap.org/data/2.5/forecast?q=`+x+`&cnt=10&APPID=5015184dd36bd3631658ee1d30f3ec0e`;
+
+        fetch(api)
+            .then(response => {
+                return response.json();
+            })
+			.then(data => putdata(data));
+        console.log(x);
+
+    }
+	geoSuccess();
+
+    function geoError(error) {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+                alert("User denied the request for Geolocation.");
+                break;
+            case error.POSITION_UNAVAILABLE:
+                alert("Location information is unavailable.");
+                break;
+            case error.TIMEOUT:
+                alert("The request to get user location timed out.");
+                break;
+            case error.UNKNOWN_ERROR:
+                alert("An unknown error occurred.");
+                break;
+        }
+    }
+
+
+
+    var dayDetails = document.querySelectorAll(".five-day-forecast ul li")
+    var details = document.querySelectorAll(".details");
+    let delay = 0;
+
+    dayDetails[0].addEventListener('click', function() {
+        if(details[0].classList.contains("show-details")) {
+            delay = 300;
+            details[0].classList.add("animate-details");
+        } else {
+            delay = 0;
+            details[0].classList.remove("animate-details");
+        }
+
+        dayDetails[0].classList.toggle("active-day");
+
+        setTimeout(function() {
+            details[0].classList.toggle("show-details");
+        }, delay);
+    });
+    dayDetails[1].addEventListener('click', function() {
+        if(details[1].classList.contains("show-details")) {
+            delay = 300;
+            details[1].classList.add("animate-details");
+        } else {
+            delay = 0;
+            details[1].classList.remove("animate-details");
+        }
+
+        dayDetails[1].classList.toggle("active-day");
+
+        setTimeout(function() {
+            details[1].classList.toggle("show-details");
+        }, delay);
+    });
+    dayDetails[2].addEventListener('click', function() {
+        if(details[2].classList.contains("show-details")) {
+            delay = 300;
+            details[2].classList.add("animate-details");
+        } else {
+            delay = 0;
+            details[2].classList.remove("animate-details");
+        }
+
+        dayDetails[2].classList.toggle("active-day");
+
+        setTimeout(function() {
+            details[2].classList.toggle("show-details");
+        }, delay);
+    });
+    dayDetails[3].addEventListener('click', function() {
+        if(details[3].classList.contains("show-details")) {
+            delay = 300;
+            details[3].classList.add("animate-details");
+        } else {
+            delay = 0;
+            details[3].classList.remove("animate-details");
+        }
+
+        dayDetails[3].classList.toggle("active-day");
+
+        setTimeout(function() {
+            details[3].classList.toggle("show-details");
+        }, delay);
+    });
+    dayDetails[4].addEventListener('click', function() {
+        if(details[4].classList.contains("show-details")) {
+            delay = 300;
+            details[4].classList.add("animate-details");
+        } else {
+            delay = 0;
+            details[4].classList.remove("animate-details");
+        }
+
+        dayDetails[4].classList.toggle("active-day");
+
+        setTimeout(function() {
+            details[4].classList.toggle("show-details");
+        }, delay);
+    });
+	dayDetails[5].addEventListener('click', function() {
+        if(details[5].classList.contains("show-details")) {
+            delay = 300;
+            details[5].classList.add("animate-details");
+        } else {
+            delay = 0;
+            details[5].classList.remove("animate-details");
+        }
+
+        dayDetails[5].classList.toggle("active-day");
+
+        setTimeout(function() {
+            details[5].classList.toggle("show-details");
+        }, delay);
+    });
+	dayDetails[6].addEventListener('click', function() {
+        if(details[6].classList.contains("show-details")) {
+            delay = 300;
+            details[6].classList.add("animate-details");
+        } else {
+            delay = 0;
+            details[6].classList.remove("animate-details");
+        }
+
+        dayDetails[6].classList.toggle("active-day");
+
+        setTimeout(function() {
+            details[6].classList.toggle("show-details");
+        }, delay);
+    });
+
+
+
+
+    function applyWeatherImg(weatherCode) {
+        let imgName;
+        var i = 0;
+        weatherImg.forEach(function (element) {
+            switch(weatherCode[i++]) {
+                case 500:
+                    imgName = "light-rain";
+                    break;
+                case 800:
+                    imgName = "clear-sky";
+                    break;
+                case 801:
+                    imgName = "few-clouds";
+                    break;
+                case 802:
+                    imgName = "scattered-clouds";
+                    break;
+                case 803:
+                    imgName = "broken-clouds";
+                    break;
+                case 804:
+                    imgName = "overcast-clouds";
+                    break;
+                default:
+                    imgName = "unknown";
+            }
+
+            element.src = "img/weather-images/" + imgName + ".svg";
+        });
+    }
+
+    function applyBackground(todaysWeatherCode){
+        let backgroundName;
+        if (todaysWeatherCode == 500) {
+            backgroundName = "rain";
+        } else if (todaysWeatherCode == 800) {
+            backgroundName = "clear";
+        } else {
+            backgroundName = "clouds";
+        }
+        body.style.backgroundImage = "url(img/backgrounds/" + backgroundName + ".svg)";
+    }
+
+
+
+    /* Settings dropdown menu */
+    let dropdown = document.querySelector(".dropdown");
+    let openDropdown = document.getElementById("settings-btn");
+    let closeDropdown = document.querySelector(".close-dropdown"); // Background div that tracks when user clicks away from dropdown
+
+    /* When settings button is clicked show/hide dropdown and closeDropdown */
+    openDropdown.addEventListener('click', function() {
+        dropdown.classList.toggle("show-grid");
+        closeDropdown.classList.toggle("show-block");
+    });
+
+    /* When user clicks away from dropdown hide both dropdown and closeDropdown */
+    closeDropdown.addEventListener('click', function() {
+        dropdown.classList.remove("show-grid");
+        closeDropdown.classList.remove("show-block");
+        applyCloseDropdown();
+    });
+
+
+
+
+    /* Change background image */
+    let body = document.querySelector("body");
+    let changeBackground = document.querySelectorAll("#backgrounds div");
+
+    changeBackground[0].addEventListener('click', function() {
+        body.style.backgroundImage = "url('img/backgrounds/clear.svg')";
+        applyCloseDropdown();
+    });
+    changeBackground[1].addEventListener('click', function() {
+        body.style.backgroundImage = "url('img/backgrounds/clouds.svg')";
+        applyCloseDropdown();
+    });
+    changeBackground[2].addEventListener('click', function() {
+        body.style.backgroundImage = "url('img/backgrounds/rain.svg')";
+        applyCloseDropdown();
+    });
+
+
+
+
+    let system = document.querySelector(".active");
+    let buttons = document.querySelectorAll("#system > button");
+
+    /* Metric */
+    buttons[0].addEventListener('click', function() {
+        buttons[0].classList.add('active');
+        buttons[1].classList.remove('active');
+        selectSystem();
+        applyCloseDropdown();
+    });
+    /* Imperial */
+    buttons[1].addEventListener('click', function() {
+        buttons[0].classList.remove('active');
+        buttons[1].classList.add('active');
+        selectSystem();
+        applyCloseDropdown();
+    });
+
+    /* User select system measurement */
+    function selectSystem() {
+        system = document.querySelector(".active");
+        update();
+    }
+
+
+
+    function applyCloseDropdown() {
+        dropdown.classList.remove("show-grid");
+        closeDropdown.classList.remove("show-block");
+    }
+
+
+
+
+
+
+    /* Update and apply temps and speed */
+    function update() {
+        temperatureSelector.textContent = tempSystem(fiveDayTemps[0] , system.id);
+
+        i = 0;
+        temp.forEach(function(element) {
+            element.textContent = tempSystem(fiveDayTemps[i++], system.id);
+        });
+
+        i = 0;
+        maxTemp.forEach(function(element) {
+            element.textContent = tempSystem(fiveDayMaxTemps[i++], system.id);
+        });
+
+        i = 0;
+        minTemp.forEach(function(element) {
+            element.textContent = tempSystem(fiveDayMinTemps[i++], system.id);
+        });
+
+        i = 0;
+        wind.forEach(function(element) {
+            element.textContent = speedSystem(fiveDayWind[i++], system.id);
+        });
+    }
+
+
+    /* Calculate temp system */
+    function tempSystem(temp, sc) {
+        if (sc == "metric") {
+            return Math.round(temp) + "°C";
+        } else {
+            return Math.round((temp * 9/5) + 32) + "°F";
+        }
+    }
+
+    function speedSystem(speed, sc) {
+        if (sc == "metric") {
+            return Math.round(speed * 3.6) + " km/h";
+        } else {
+            return Math.round((speed * 3.6) / 1.609) + " mph";
+        }
+    }
+
+    /* let body = document.querySelector("body");
+
+    if (today.getHours() < 6 || today.getHours() > 20) {
+        body.style.backgroundImage = "url('img/clear-night.svg')";
+        body.style.backgroundColor = "#2A3276";
+
+        dropdown.style.color = "rgb(14, 24, 113)";
+        dropdown.style.boxShadow = "0 0 80px rgba(12, 27, 141, 0.6)";
+        closeDropdown.style.backgroundColor = "rgba(4, 34, 102, 0.4)";
+    } */
+};
+
+</script>
+		<script src="{% static 'js/pagejs.js' %}" type="text/javascript"></script>
+
+<script>!function(e,t,a){var c=e.head||e.getElementsByTagName("head")[0],n=e.createElement("script");n.async=!0,n.defer=!0, n.type="text/javascript",n.src=t+"/static/js/chat_widget.js?config="+JSON.stringify(a),c.appendChild(n)}(document,"https://app.engati.com",{bot_key:"d6102b4bb89c4e5a",welcome_msg:true,branding_key:"default",server:"https://app.engati.com",e:"p" });</script>	</body>
+</html>
+
+
+
+
+
+
+
+

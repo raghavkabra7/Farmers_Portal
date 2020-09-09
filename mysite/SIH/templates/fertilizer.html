@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <title>Fertilizer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{% static 'css/webpagecss.css' %}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+  <style>
+	card{
+	border-radius:50px;
+	}
+	img{border-radius:50px;}
+	P { text-align: center }
+	</style>
+</head>
+
+<div>
+	<div id="google_translate_element"></div>
+
+<div id="header" style="background-color:green;height:0px">
+
+	<div id="leftmenu">
+		<ul class="menu">
+			<li><a href="{% url 'home' %}">Home</a></li>
+			<li><a href="{% url 'A' %}">About Us</a></li>
+			<li><a href="{% url 'G' %}">Govt.Helpline</a></li>
+			<li><div class="dropdown1">
+				<a class="dropdownbtn">Financial Help<i class="fa fa-caret-down"></i></a>
+				<div class="dropdown-content">
+				  <a href="{% url 'L' %}">Loan</a>
+				  <a href="{% url 'S' %}">Scheme</a>
+				</div>
+			</div></li>
+			<li><div class="dropdown1">
+				<a class="dropdownbtn">More<i class="fa fa-caret-down"></i></a>
+				<div class="dropdown-content">
+				  <a href="{% url 'P' %}">Pest</a>
+				  <a href="{% url 'C' %}">Crop</a>
+					 {% if request.user.is_staff %}
+					<li><a href="{% url 'M' %}">send sms</a></li>
+					{% endif %}
+				</div>
+			</div></li>
+
+		</ul>
+	</div>
+
+	<div id="rightmenu">
+			{% if not request.user.is_authenticated %}
+		<span id="profile"><button id="loginregister" onclick="document.getElementById('id01').style.display='block'">Login/Register</button></span>
+		 {% else %}
+				<a href="{% url 'r' %}">Logout &nbsp;{{a}}&nbsp;     {{ request.user.user_detail_set.first.name }}  &nbsp;   </a>
+	</div>
+	<!---img src="{{ request.user.user_detail_set.first.photo.url }}" --->
+{% endif %}
+</div>
+
+</div>
+<div class="container pt-5">
+  <h1 style="color:green">Helpline</h1><br><br>
+  <div class="row">
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+<img src="{% static 'images/k.jpg' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		 <h4 class="card-title">kisan helpline number</h4>
+
+		  <h2 id="ferth2"><p style="color:green">18001801551</p></h2>
+		   <a id="ferth2" href="https://mkisan.gov.in/" class="btn btn-success">contact</a>
+
+
+
+		</div>
+	  </div>
+	  <br>
+
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+	  <img src="{% static 'images/k.png' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">IMD  Weather on Web</h4>
+		  <h2 id="ferth2"><p style="color:green">18001801717</p></h2>
+
+		  <a id="ferth2" href="https://mausam.imd.gov.in/" class="btn btn-success ">contact</a>
+		</div>
+	  </div>
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+<img src="{% static 'images/k2.jpg' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">Crop Insurance Schemes -ICICI Lombard</h4>
+		   <h2 id="ferth2"><p style="color:green">18002666</p></h2>
+		  <a id="ferth2" href="#" class="btn btn-success">contact</a>
+		</div>
+	  </div>
+	  <br>
+
+
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+		<img src="{% static 'images/k4.jpg' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">Crop Insurance Schemes-Reliance general</h4>
+		  <h2 id="ferth2"><p style="color:green">18003009</p></h2>
+		  <a id="ferth2" href="#" class="btn btn-success">Contact</a>
+		</div>
+	  </div>
+	  <br>
+
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+	  <img src="{% static 'images/k3.jpg' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">Crop Insurance Schemes-Royal  Sundaram</h4>
+		   <h2 id="ferth2"><p style="color:green">18604250000</p></h2>
+		  <a id="ferth2" href="#" class="btn btn-success">Contact</a>
+		</div>
+
+	  </div>
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+		<img src="{% static 'images/k5.png' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">Crop Insurance Schemes -TATA AIG Insurance</h4>
+		  <h2 id="ferth2"><p style="color:green">18002667780</p></h2>
+		  <a id="ferth2" href="#" class="btn btn-success">Contact</a>
+		</div>
+	  </div>
+	  <br>
+
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+	  <img src="{% static 'images/k9.png' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">Crop Insurance Schemes -L&T insurance</h4>
+		   <h2 id="ferth2"><p style="color:green">18002095846</p></h2>
+		  <a id="ferth2" href="#" class="btn btn-success">Contact</a>
+		</div>
+
+	  </div>
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+		<img src="{% static 'images/k6.png' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">Crop Insurance Schemes- Future Generali</h4>
+		   <h2 id="ferth2"><p style="color:green"> 1800220233 / 18605003333</p></h2>
+		  <a id="ferth2" href="#" class="btn btn-success">Contact</a>
+		</div>
+	  </div>
+	  <br>
+
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+	  <img src="{% static 'images/k7.png' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">Crop Insurance Schemes -HDFC ERGO</h4>
+		   <h2 id="ferth2"><p style="color:green">18002700700</p></h2>
+		  <a id="ferth2" href="#" class="btn btn-success">Contact</a>
+		</div>
+
+	  </div>
+	  <div class="card col-3 ml-5 mb-3" id="card" style="width:400px">
+		<img src="{% static 'images/k8.png' %}" alt="Lights" style="width:100%"><div class="card-body">
+		  <h4 class="card-title">Crop Insurance Schemes -Chola Insurance</h4>
+		  <h2 id="ferth2"><p class="card-text" style="color:green" >18002005544</p></h2>
+		  <a id="ferth2" href="#" class="btn btn-success">Contact</a>
+		</div>
+	  </div>
+	  <br>
+
+	  <div class="card col-3  ml-5 mb-3" id="card" style="width:400px">
+	  <img src="{% static 'images/k10.png' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">Bajaj Allianz General Insurance Co. Ltd</h4>
+		   <h2 id="ferth2"><p style="color:green">18001801551</p></h2>
+		   <a id="ferth2" href="#" class="btn btn-success">Contact</a>
+		</div>
+
+	  </div>
+	  <div class="card col-3  ml-5 mb-3" id="card" style="width:400px">
+	  <img src="{% static 'images/k11.jpg' %}" alt="Lights" style="width:100%">
+		<div class="card-body">
+		  <h4 class="card-title">AGMarket Portal</h4>
+		   <h2 id="ferth2"><p style="color:green">011--23381045</p></h2>
+		   <a id="ferth2" href="http://agriculture.gov.in/" class="btn btn-success">Contact</a>
+		</div>
+
+	  </div>
+
+	</div>
+</div>
+
+</body>
+</html>

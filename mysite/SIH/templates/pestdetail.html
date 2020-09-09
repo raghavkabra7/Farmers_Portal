@@ -1,0 +1,104 @@
+
+<html>
+<head>
+		{% load static %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="static/bootstrap/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'css/webpagecss.css' %}">
+</head>
+
+
+
+<div id="header" style="background-color:green">
+				<div id="leftmenu">
+				<ul class="menu">
+					<li><a href="{% url 'home' %}">Home</a></li>
+					<li><a href="{% url 'A' %}">About Us</a></li>
+					<li><a href="{% url 'G' %}">Govt.Helpline</a></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">Financial Help<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'L' %}">Loan</a>
+						  <a href="{% url 'S' %}">Scheme</a>
+						</div>
+					</div></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">More<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'P' %}">Pest</a>
+						  <a href="{% url 'C' %}">Crop</a>
+							 {% if request.user.is_staff %}
+                <li><a href="{% url 'M' %}">send sms</a></li>
+                {% endif %}
+						</div>
+					</div></li>
+					<li>Select Language</li>
+				</ul>
+				</div>
+
+				<div id="rightmenu">
+					{% if not request.user.is_authenticated %}
+				<span id="profile"><button id="loginregister" onclick="document.getElementById('id01').style.display='block'">Login/Register</button></span>
+				 {% else %}
+						<a href="{% url 'r' %}">Logout &nbsp;{{a}}&nbsp;     {{ request.user.user_detail_set.first.name }}  &nbsp;   </a>
+
+
+				</div>
+				<!---img src="{{ request.user.user_detail_set.first.photo.url }}" --->
+{% endif %}
+		</div>
+
+<div class="container">
+	<div class="row">
+		<h1>{{ pest.pest_name.pest_name }}</h1></div>
+{% if pest.pest_name.photo %}
+<img src="{{ pest.pest_name.photo.url }}" height="100px">
+{% endif %}
+<p>{{ pest.pest_name.long_disc }}</p>
+<h1>Damage:</h1>
+<p>{{ pest.pest_name.demage }}</p>
+<h1>Prevantion:</h1>
+<p>{{ pest.pest_name.Preventing }}</p>
+<h1>Tips:</h1>
+<p>{{ pest.pest_name.Tips }}</p>
+	</div>
+
+
+        <div class="col-4">
+            {% for i in pest.pestsolution_set.all %}
+            {% if i.photo1 %}
+            <img src="{{ i.photo1.url }}" height="100px">
+            {% endif %}
+            <h3>descripion</h3>
+            <p>{{ i.madecine }}</p>
+
+            {% endfor %}
+        </div>
+
+
+	<div class="container-fluid" id="footer">
+			<div class="footer">
+
+			<div class="row1">
+              <div style="width:auto;" class=" col-1">
+                 <img src="{% static 'images/krishi_seva.png' %}" class="pr-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+              <div class="col-9">
+                  <h5>Sell With Us:</h5>
+              </div>
+
+
+             <div style="width:auto;" class=" col-2">
+                 <img src="{% static 'images/cdklogo.png' %}" class="pl-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+			</div>
+
+			</div>
+		</div>
+</html>

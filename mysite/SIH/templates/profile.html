@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		{% load static %}
+
+<title>Profile</title>
+		<link rel="stylesheet" href="{% static 'css/webpagecss.css' %}">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script type='text/javascript'>
+$(function(){
+     $('#submitBtn').click(function(){
+        $('.enableOnInput').prop('disabled', false);
+        $('#submitBtn').val('Update');
+     });
+});
+</script>
+
+
+</head>
+<body>
+<div id="header" style="background-color:green">
+				<div id="leftmenu">
+				<ul class="menu">
+					<li><a href="{% url 'home' %}">Home</a></li>
+					<li><a href="{% url 'A' %}">About Us</a></li>
+					<li><a href="{% url 'G' %}">Govt.Helpline</a></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">Financial Help<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'L' %}">Loan</a>
+						  <a href="{% url 'S' %}">Scheme</a>
+						</div>
+					</div></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">More<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'P' %}">Pest</a>
+						  <a href="{% url 'C' %}">Crop</a>
+							 {% if request.user.is_staff %}
+                <li><a href="{% url 'M' %}">send sms</a></li>
+                {% endif %}
+						</div>
+					</div></li>
+
+				</ul>
+				</div>
+
+				<div id="rightmenu">
+					{% if not request.user.is_authenticated %}
+				<span id="profile"><button id="loginregister" onclick="document.getElementById('id01').style.display='block'">Login/Register</button></span>
+				 {% else %}
+						<a href="{% url 'r' %}">Logout &nbsp;{{a}}&nbsp;     {{ request.user.user_detail_set.first.name }}  &nbsp;   </a>
+
+
+				</div>
+				<!---img src="{{ request.user.user_detail_set.first.photo.url }}" --->
+{% endif %}
+		</div>
+
+
+
+
+
+<div class="container">
+
+<h2 style="text-align:center;color:green;font-size:30px;">Profile</h2>
+
+<div class="card">
+  <center><img src="{{ request.user.user_detail_set.first.photo.url }}" alt="Farmer" style="width:10%">
+    <h1>{{ request.user.user_detail_set.first.name }}</h1></center>
+
+  <table>
+  <tr>
+    <th>KISAAN CARD NO</th>
+    <th><input type="text" placeholder="{{ request.user.user_detail_set.first.id_proof }}" name='searchQuery' id='searchInput' class='enableOnInput' disabled='disabled'> </th>
+
+  </tr>
+  <tr>
+    <td><b>ADHAAR NUMBER</b></td>
+    <td><input type="" placeholder="{{ request.user.user_detail_set.first.aadhar }}" name='searchQuery' id='searchInput' class='enableOnInput' disabled='disabled'></td>
+
+  </tr>
+  <tr>
+    <td><b>LAND OWNED</b></td>
+    <td><input type="text" placeholder="{{ request.user.user_detail_set.first.size }}" name='searchQuery' id='searchInput' class='enableOnInput' disabled='disabled'></td>
+  </tr>
+  <tr>
+    <td><b>STATE</b> </td>
+    <td><form action="">
+  <select name="STATE" id='searchInput'>
+    <option value="volvo">Madhya Pradesh</option>
+    <option value="saab">Andra Pradesh</option>
+    <option value="fiat">Arunachal Pradesh</option>
+    <option value="audi">Assam</option>
+    <option value="saab">Bihar</option>
+    <option value="fiat">Chhattisgarh</option>
+    <option value="audi">Goa</option>
+    <option value="saab">Gujarat</option>
+    <option value="fiat">Haryana</option>
+    <option value="audi">Himachal Pradesh</option>
+    <option value="saab">Jammu and Kashmir</option>
+    <option value="fiat">Jharkhand</option>
+    <option value="audi">Karnataka</option>
+    <option value="saab">Kerala</option>
+    <option value="fiat">Maharashtra</option>
+    <option value="audi">Manipur</option>
+    <option value="saab">Meghalaya</option>
+    <option value="fiat">Mizoram</option>
+    <option value="audi">Nagaland</option>
+    <option value="saab">Orissa</option>
+    <option value="fiat">Punjab</option>
+    <option value="audi">Rajasthan</option>
+    <option value="saab">Sikkim</option>
+    <option value="fiat">Tamil Nadu</option>
+    <option value="audi">Telagana</option>
+    <option value="saab">Tripura</option>
+    <option value="fiat">Uttaranchal</option>
+    <option value="audi">Uttar Pradesh</option>
+    <option value="audi">West Bengal</option>
+  </select></td>
+  </tr>
+  <tr>
+
+    <td><b>DISTRICT</b></td>
+    <td><input type="text" placeholder="{{ request.user.user_detail_set.first.dis }}" name='searchQuery' id='searchInput' class='enableOnInput' disabled='disabled'></td>
+  </tr>
+  <tr>
+    <td><b>LANGUAGE</b></td>
+    <td><form>
+  <select name="cars" id='searchInput'>
+    <option value="volvo">HINDI</option>
+    <option value="saab">ENGLISH</option>
+    <option value="fiat">BANGALI</option>
+    <option value="audi">KANNADA</option>
+  </select></td>
+  </tr>
+</table><br></form>
+
+  <!-- Password field
+<b>PASSWORD:</b> <input type="password" value="FakePSW" name='searchQuery' id='myInput'>-->
+
+<!-- An element to toggle between password visibility -->
+
+
+
+<br>
+    <a href="#"><button id='submitBtn' value='Edit'>EDIT </button></a>
+
+</div>
+    </div>
+
+<div class="container-fluid" id="footer">
+			<div class="footer">
+			<h1><span>Transfroming India </span><span style="color:green;">through</span><span style="color:yellow"> Agriculture</span></h1>
+			<div class="row1">
+              <div style="width:auto;" class="pt-3 col-3">
+                 <img src="{% static 'images/krishi_seva.png' %}" class="pr-5" style="height:70px;width:100px;"/>
+              </div>
+
+
+              <div class="col-6">
+                  <h5>Sell With Us:</h5>
+              </div>
+
+
+             <div style="width:auto;" class="pt-3 col-3">
+                 <img src="{% static 'images/cdklogo.png' %}" class="pl-5" style="height:70px;width:100px;"/>
+              </div>
+
+
+			</div>
+
+			</div>
+		</div>
+
+
+</body>
+</html>

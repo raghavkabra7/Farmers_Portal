@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action ="" method = "post">
+    <select name="did">
+        {% for i in alldis %}
+        <option value="{{ i.id }}">{{ i.name }}</option>
+        {% endfor %}
+    </select>
+    {% csrf_token %}
+    <input type="submit">
+</form>
+</form>
+</body>
+</html>

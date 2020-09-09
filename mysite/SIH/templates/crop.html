@@ -1,0 +1,103 @@
+
+<html>
+<head>
+		{% load static %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="static/bootstrap/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'css/webpagecss.css' %}">
+</head>
+
+
+
+
+<div id="header" style="background-color:green">
+				<div id="leftmenu">
+				<ul class="menu">
+					<li><a href="{% url 'home' %}">Home</a></li>
+					<li><a href="{% url 'A' %}">About Us</a></li>
+					<li><a href="{% url 'G' %}">Govt.Helpline</a></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">Financial Help<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'L' %}">Loan</a>
+						  <a href="{% url 'S' %}">Scheme</a>
+						</div>
+					</div></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">More<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'P' %}">Pest</a>
+						  <a href="{% url 'C' %}">Crop</a>
+							 {% if request.user.is_staff %}
+                <li><a href="{% url 'M' %}">send sms</a></li>
+                {% endif %}
+						</div>
+					</div></li>
+
+				</ul>
+				</div>
+
+				<div id="rightmenu">
+					{% if not request.user.is_authenticated %}
+				<span id="profile"><button id="loginregister" onclick="document.getElementById('id01').style.display='block'">Login/Register</button></span>
+				 {% else %}
+						<a href="{% url 'r' %}">Logout &nbsp;{{a}}&nbsp;     {{ request.user.user_detail_set.first.name }}  &nbsp;   </a>
+
+
+				</div>
+				<!---img src="{{ request.user.user_detail_set.first.photo.url }}" --->
+{% endif %}
+		</div>
+
+<div class="container" style="padding-top:60px">
+	   <div class="row">
+  {% for i in allcrop %}
+<div class="col-lg-4">
+
+<div class="card-group pb-4">
+
+  <div class="card ">
+    <img class="card-img-top" src="{{ i.photo.url }}" height="-10px" width="10px" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{ i.crop_name }}</h5>
+      <p class="card-text">{{ i.short_disc }}</p>
+    </div>
+    <div class="card-footer">
+		<small class="text-muted"><a href="{% url 'cd' i.id %}">more</a></small>
+    </div>
+  </div>
+
+</div>
+</div>
+		   {% endfor %}
+	   </div>
+</div>
+
+
+	<div class="container-fluid" id="footer">
+			<div class="footer">
+
+			<div class="row1">
+              <div style="width:auto;" class=" col-1">
+                 <img src="{% static 'images/krishi_seva.png' %}" class="pr-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+              <div class="col-9">
+                  <h5>Sell With Us:</h5>
+              </div>
+
+
+             <div style="width:auto;" class=" col-2">
+                 <img src="{% static 'images/cdklogo.png' %}" class="pl-5" style="height:100px;width:130px;"/>
+              </div>
+
+
+			</div>
+
+			</div>
+		</div>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE>
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="static/bootstrap/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{% static 'css/webpagecss.css' %}">
+	<link rel="stylesheet" type="text/css" href="aboutus.css">
+	<title>About Us</title>
+</head>
+<body>
+
+
+<div id="header" style="background-color:green">
+				<div id="leftmenu">
+				<ul class="menu">
+					<li><a href="{% url 'home' %}">Home</a></li>
+					<li><a href="{% url 'A' %}">About Us</a></li>
+					<li><a href="{% url 'G' %}">Govt.Helpline</a></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">Financial Help<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'L' %}">Loan</a>
+						  <a href="{% url 'S' %}">Scheme</a>
+						</div>
+					</div></li>
+					<li><div class="dropdown1">
+						<a class="dropdownbtn">More<i class="fa fa-caret-down"></i></a>
+						<div class="dropdown-content">
+						  <a href="{% url 'P' %}">Pest</a>
+						  <a href="{% url 'C' %}">Crop</a>
+							 {% if request.user.is_staff %}
+                <li><a href="{% url 'M' %}">send sms</a></li>
+                {% endif %}
+						</div>
+					</div></li>
+
+				</ul>
+				</div>
+
+				<div id="rightmenu">
+					{% if not request.user.is_authenticated %}
+				<span id="profile"><button id="loginregister" onclick="document.getElementById('id01').style.display='block'">Login/Register</button></span>
+				 {% else %}
+						<a href="{% url 'r' %}">Logout &nbsp;{{a}}&nbsp;     {{ request.user.user_detail_set.first.name }}  &nbsp;   </a>
+
+
+				</div>
+				<!---img src="{{ request.user.user_detail_set.first.photo.url }}" --->
+{% endif %}
+		</div>
+<div class="container-fluid">
+	<div class="image">
+  <img class="pt-1"src="{% static 'images/111.jpg' %}" alt="Snow" style="width:100%;">
+  <div class="top-left pt-5"><h1><b>Krishi Seva</b></h1></div>
+<div class="bottom-right">
+	<p><h3>We are providing farmer a efficient way for farming with high yield and with less loss.
+	We also providing weather prediction and crops according to there field components and also provide suggetion for there using crops for more yield.</h3> </p>
+
+</div>
+</div>
+	</div>
+<h3>For more details:  krishi.seva2k20@gmail.com</h3>
+
+</body>
+</html>
